@@ -6,6 +6,8 @@ object Option_data {
 
     sealed trait Option[+A]
     object Option {
+      import OptionImplicit._
+
       def apply[T](t: T): Option[T] = Some(t)
 
       def empty[T]: None.type = None
@@ -29,6 +31,13 @@ object Option_data {
 //        map2(m)(c)((x, y) => f(x._1, x._2, y))
         map2(map2(a)(b)((_, _)))(c){case ((x, y), z) => f(x, y, z)}
       }
+
+      def map4[A, B, C, D, E](a: Option[A])(b: Option[B])(c: Option[C])(d: Option[D])(f: (A, B, C, D) => E): Option[E] =  for {
+        x <- a
+        y <- b
+        z <- c
+        w <- d
+      } yield f(x, y, z, w)
 
       def flatten[A](t: Option[Option[A]]): Option[A] = t match {case Some(t) => t}
 
@@ -92,8 +101,12 @@ object Option_data {
     } yield x + y
     println(s"r9 is $r9")
 
-    val r10 = r9.filter(_ % 2 == 1)
+    val r10 = r9.filter(_ % 2 == 0)
     println(s"r10 is $r10")
+
+     val r11 = Option.map4(r7)(r8)(r9)(r10)(_ + _ + _ + _)
+    println(s"r11 is $r11")
+
 
   }
 
