@@ -1,9 +1,7 @@
 package chapter05_Purely_functional_parallelism
+
 import scala.language.postfixOps
 import java.util.concurrent.ExecutorService
-
-
-
 import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
@@ -62,7 +60,7 @@ object parallelism {
         def map[A, B](fa: Par[A])(f: A => B): Par[B] = map2(fa)(unit(()))((a, _) => f(a))
 
         def join[A](fa: Par[Par[A]]): Par[A] = e => {
-          fa(e).map(_(e)).flatten
+          fa(e).map(_ (e)).flatten
         }
 
         def flatten[A](fa: Par[Par[A]]): Par[A] = join(fa)
@@ -88,7 +86,7 @@ object parallelism {
         }.flatten
 
         def lift2[A, B](f: A => B): A => Par[B] = a => { _ =>
-           Future(f(a))
+          Future(f(a))
         }
 
         // 这个版本好,我很喜欢需要自己继续的思考
@@ -128,8 +126,8 @@ object parallelism {
     }
 
     import par.ParImplicits._
-//    val r = Demo.sum_3((1L to 1000000L))
-//    println(s"r is ${Await.result(r.run, 1.hour)}")
+    //    val r = Demo.sum_3((1L to 1000000L))
+    //    println(s"r is ${Await.result(r.run, 1.hour)}")
 
     val urls = List(
       "https://www.baidu.com",
