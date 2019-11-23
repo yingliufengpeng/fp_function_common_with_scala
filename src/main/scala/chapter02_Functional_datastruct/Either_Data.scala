@@ -1,7 +1,7 @@
 package chapter02_Functional_datastruct
 
 
-object Either_data {
+object Either_Data {
 
   def main(args: Array[String]): Unit = {
 

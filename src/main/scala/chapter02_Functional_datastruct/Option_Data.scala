@@ -1,6 +1,6 @@
 package chapter02_Functional_datastruct
 
-object Option_data {
+object Option_Data {
 
   def main(args: Array[String]): Unit = {
 
