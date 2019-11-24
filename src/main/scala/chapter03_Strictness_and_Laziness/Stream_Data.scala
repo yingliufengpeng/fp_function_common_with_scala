@@ -33,7 +33,7 @@ object Stream_Data {
 
       def foldRight[A, B](as: Stream[A])(zero: B)(f: (=> B, A) => B): B = as match {
         case Empty => zero
-        case Cons(h, tail) => f(foldRight(tail())(zero)(f),h())
+        case Cons(h, tail) => f(foldRight(tail())(zero)(f), h())
       }
 
       // 给定一个初始的状态还有一个方法,然后使用下一个状态做下一个值的处理的逻辑
@@ -43,16 +43,15 @@ object Stream_Data {
         case Some((a, s1)) => cons(a, unfold(s1)(f))
       }
 
-      def take[A](as: Stream[A])(n: Int): Stream[A] = unfold((as, n)){
+      def take[A](as: Stream[A])(n: Int): Stream[A] = unfold((as, n)) {
         case (Empty, _) => None
         case (_, 0) => None
-        case (Cons(h, tai), k) => Some((h(),(tai(), k - 1)))
+        case (Cons(h, tai), k) => Some((h(), (tai(), k - 1)))
       }
 
     }
 
     object StreamImplicit {
-
 
 
       implicit class Stram2Monoid[A](as: Stream[A]) {
@@ -64,6 +63,7 @@ object Stream_Data {
         def take(n: Int): Stream[A] = Stream.take(as)(n)
 
       }
+
     }
 
     case object Empty extends Stream[Nothing]
@@ -86,15 +86,17 @@ object Stream_Data {
     println(s"r4 is $r4")
 
     println("*" * 50)
-    val r5 = r.foldRight(false)((acc, e) => { println(s"e is $e"); e == 4 || acc})
+    val r5 = r.foldRight(false)((acc, e) => {
+      println(s"e is $e"); e == 4 || acc
+    })
     println(s"r5 is $r5")
 
-//    val r6 = Stream((1 to Int.MaxValue).toList:_*)
-//    println(s"r6 is $r6")
+    //    val r6 = Stream((1 to Int.MaxValue).toList:_*)
+    //    println(s"r6 is $r6")
 
-//    lazy val ones: Stream[Int] = Stream.cons(1, ones)
-//    println(s"ones is $ones")
-//    ones.toList
+    //    lazy val ones: Stream[Int] = Stream.cons(1, ones)
+    //    println(s"ones is $ones")
+    //    ones.toList
 
     val r6 = Stream.unfold(1)(s => Some(1, s))
     println(s"r6 is $r6")
