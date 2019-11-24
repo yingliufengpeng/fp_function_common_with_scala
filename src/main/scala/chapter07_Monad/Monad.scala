@@ -156,7 +156,7 @@ object Monad {
     val f2: NonEmptyList[Int] => NonEmptyList[Int] = functor.lift(f1)
 
     // 理论上两者之间是相等的关系型
-    // 用把低纬度的映射提升到高纬度的映射之中
+    // 用把低维度的映射提升到高维度的映射之中
     val r33 = functor.map(r)(f1)
     val r44 = f2(r)
 
