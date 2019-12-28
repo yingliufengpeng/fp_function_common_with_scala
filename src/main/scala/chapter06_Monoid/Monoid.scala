@@ -11,11 +11,11 @@ object Monoid {
      */
 
     trait SemiGroup[A] {
-      def op(x: A)(y: A): A
+      def op(x: A)(y: A): A   // 半群满足某种性质,是具有封闭的操作
     }
 
     trait Monoid[A] extends SemiGroup[A] {
-      def identity: A
+      def identity: A         // 幺半群则是有一个单位元
       def zero: A = identity
     }
 

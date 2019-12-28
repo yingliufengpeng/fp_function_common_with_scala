@@ -43,7 +43,7 @@ object State_Data {
     }
 
     object rng {
-      def apply(seed: Long) = SimpleRng(seed)
+      def apply(seed: Long): RNG = SimpleRng(seed)
     }
 
     case class SimpleRng(seed: Long) extends RNG {

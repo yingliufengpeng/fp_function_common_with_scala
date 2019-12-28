@@ -35,13 +35,13 @@ object Machine_Data {
     object Machine {
 
       def charge: State[Machine, Int] = State {
-        case Machine(true, remain) if remain > 0 => (0, Machine(false, remain))
+        case Machine(true, remain) if remain > 0 => (0, Machine(locked = false, remain))
         case x => (0, x)
 
       }
 
       def deliver: State[Machine, Int] = State {
-        case Machine(false, remain) if remain > 0 => (1, Machine(true, remain - 1))
+        case Machine(false, remain) if remain > 0 => (1, Machine(locked = true, remain - 1))
         case x => (0, x)
       }
 
