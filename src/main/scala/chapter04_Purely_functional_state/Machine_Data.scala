@@ -59,7 +59,7 @@ object Machine_Data {
     }
 
     val m = Machine.simulate
-    println(s"m is ${m.run(Machine(true, 15))}")
+    println(s"m is ${m.run(Machine(locked = true, 15))}")
 
   }
 
